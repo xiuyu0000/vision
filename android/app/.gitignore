@@ -1,0 +1,6 @@
+/build
+/src/main/assets/style_predict_quant.ms
+/src/main/assets/style_transfer_quant.ms
+/src/main/cpp/mindspore-lite-1.5.0-android-aarch64/
+/src/main/assets/mobilenetv2.ms
+/release/

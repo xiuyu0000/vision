@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2022. Huawei Technologies Co., Ltd
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+    <color name="colorPrimary">#5D95FF</color>
+    <color name="colorPrimaryDark">#ffffff</color>
+    <color name="colorAccent">#ffffff</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="gray">#A69D9D</color>
+    <color name="text_black">#FF333333</color>
+    <color name="text_blue">#6DA7FF</color>
+    <color name="text_yellow">#F8E71C</color>
+    <color name="text_orange">#FF844D</color>
+    <color name="text_green">#66B50A</color>
+    <color name="main_tab_text_checked">#6189ff</color>
+    <color name="main_tab_text_uncheck">#FF999999</color>
+    <color name="blackText">#FF2F2F2F</color>
+    <color name="grayLine">#f2f2f2</color>
+
+    <color name="divider_gray">#e4e4e4</color>
+    <color name="gray_800">#FF8C8C8C</color>
+
+    <color name="gray_face_text">#FF7E7E7E</color>
+    <color name="gray_face_text2">#FFB2B2B2</color>
+
+
+</resources>

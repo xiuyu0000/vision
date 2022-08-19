@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2022. Huawei Technologies Co., Ltd
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="15dp"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:id="@+id/closeBtn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/main_close"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <ImageView
+            android:id="@+id/moreBtn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/main_more"
+            app:layout_constraintLeft_toRightOf="@+id/closeBtn"
+            app:layout_constraintRight_toLeftOf="@+id/galleryBtn"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <ImageView
+            android:id="@+id/switchBtn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/main_switch"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <ImageView
+            android:id="@+id/galleryBtn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/main_gallery"
+            app:layout_constraintLeft_toRightOf="@+id/moreBtn"
+            app:layout_constraintRight_toLeftOf="@id/switchBtn"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/viewFinder"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white">
+
+        <ImageButton
+            android:scaleType="fitXY"
+            android:id="@+id/btnCamera"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/btn_photo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.mindspore.utilslibrary.ui.view.UpImageDownTextView
+            android:id="@+id/btnOne"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:DownTextView="@string/main_btn_classification"
+            app:DownTextViewCheckedColor="@color/colorPrimary"
+            app:DownTextViewUnCheckColor="@color/black"
+            app:UpImageView="@drawable/icon1"
+            app:UpImageViewChecked="@drawable/icon1_checked"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/btnTwo"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.mindspore.utilslibrary.ui.view.UpImageDownTextView
+            android:id="@+id/btnTwo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:DownTextView="@string/main_btn_detection"
+            app:DownTextViewCheckedColor="@color/colorPrimary"
+            app:DownTextViewUnCheckColor="@color/black"
+            app:UpImageView="@drawable/icon2"
+            app:UpImageViewChecked="@drawable/icon2_checked"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/btnOne"
+            app:layout_constraintRight_toLeftOf="@+id/btnCamera"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.mindspore.utilslibrary.ui.view.UpImageDownTextView
+            android:id="@+id/btnThree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:DownTextView="@string/main_btn_face"
+            app:DownTextViewCheckedColor="@color/colorPrimary"
+            app:DownTextViewUnCheckColor="@color/black"
+            app:UpImageView="@drawable/icon3"
+            app:UpImageViewChecked="@drawable/icon3_checked"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/btnCamera"
+            app:layout_constraintRight_toLeftOf="@+id/btnFour"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.mindspore.utilslibrary.ui.view.UpImageDownTextView
+            android:id="@+id/btnFour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:DownTextView="@string/main_btn_filter"
+            app:DownTextViewCheckedColor="@color/colorPrimary"
+            app:DownTextViewUnCheckColor="@color/black"
+            app:UpImageView="@drawable/icon4"
+            app:UpImageViewChecked="@drawable/icon4_checked"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/btnThree"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:text="@string/app_name"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/btnCamera"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

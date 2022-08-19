@@ -1,0 +1,86 @@
+# Copyright 2021 Huawei Technologies Co., Ltd
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ============================================================================
+
+# The name of the used model, and the prefix name of the checkpoint file.
+model_name: "mobilenet_v2_1.0"
+
+# The dataset sink mode.
+dataset_sink_mode: True
+
+# Context settings.
+context:
+  mode: 0 #0--Graph Mode; 1--Pynative Mode
+  device_target: "GPU"
+
+# Model settings.
+model:
+  type: BaseClassifier
+  backbone:
+    type: MobileNetV2
+    alpha: 1.0 # Channels multiplier for round to 8/16 and others.
+  neck:
+    type: GlobalAvgPooling
+    keep_dims: True
+  head:
+    type: ConvHead
+    input_channel: 1280
+    num_classes: 1001
+    has_bias: True
+
+# Learning rate settings.
+learning_rate:
+  type: "cosine_decay_lr"
+  min_lr: 0.0
+  max_lr: 0.1
+  total_step: 4003600
+  step_per_epoch: 20018
+  decay_epoch: 200
+
+# Optimizer settings.
+optimizer:
+  type: 'Momentum'
+  momentum: 0.9 # Momentum for the moving average.
+
+# Loss function settings.
+loss:
+  type: CrossEntropySmooth
+  sparse: True
+  reduction: "mean"
+  smooth_factor: 0.1 # The label smooth factor.
+  classes_num: 1001 # Number of classification.
+
+# Training process settings.
+train:
+  pre_trained: False
+  pretrained_model: null # Location of pretrained model.
+  ckpt_path: "./output/" # Location of training outputs.
+  epochs: 200
+  save_checkpoint_steps: 20018 # Number of steps to save checkpoint file.
+  keep_checkpoint_max: 10 # Max number of save checkpoint files.
+  run_distribute: True #
+
+# Eval process settings.
+eval:
+  pretrained_model: ""
+
+# Export model file.
+export:
+  pretrained_model: ""
+  batch_size: 256
+  image_height: 224
+  image_width: 224
+  input_channel: 3
+  file_name: "mobilenet_v2_1.0" # File name of the model to be exported.
+  file_formate: "MINDIR" # MindSpore currently supports 'AIR', 'ONNX' and 'MINDIR' format for exported model.

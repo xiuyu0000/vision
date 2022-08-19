@@ -1,0 +1,116 @@
+/*
+ * Copyright (c) 2022. Huawei Technologies Co., Ltd
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * To download necessary model file from Server.
+ */
+def targetModelFile = "src/main/assets/mobilenetv2.ms"
+def targetDetectionModelFile = "src/main/assets/detection.ms"
+def modelClassificationCommonDownloadUrl = "https://download.mindspore.cn/model_zoo/official/lite/mobilenetv2_openimage_lite/mobilenetv2.ms"
+def modelDetectionDownloadUrl = "https://download.mindspore.cn/model_zoo/official/lite/ssd_mobilenetv2_lite/ssd.ms"
+
+def targetMindSporeInclude = "src/main/cpp/"
+def mindsporeLite_Version = "mindspore-lite-1.7.0-android-aarch64"
+def mindSporeLibrary_arm64 = "src/main/cpp/${mindsporeLite_Version}.tar.gz"
+def mindsporeLiteDownloadUrl = "https://ms-release.obs.cn-north-4.myhuaweicloud.com/1.7.0/MindSpore/lite/release/android/gpu/${mindsporeLite_Version}.tar.gz"
+def cleantargetMindSporeInclude = "src/main/cpp"
+
+task cleanCmakeCache(type: Delete) {
+    delete '.cxx/cmake/debug'
+    delete '.cxx/cmake/release'
+}
+
+task downloadClassificationModelFile(type: DownloadUrlTask) {
+    doFirst {
+        println "Downloading ${modelClassificationCommonDownloadUrl}"
+    }
+    sourceUrl = "${modelClassificationCommonDownloadUrl}"
+    target = file("${targetModelFile}")
+}
+
+task downloadDetectionModelFile(type: DownloadUrlTask) {
+    doFirst {
+        println "Downloading ${modelDetectionDownloadUrl}"
+    }
+    sourceUrl = "${modelDetectionDownloadUrl}"
+    target = file("${targetDetectionModelFile}")
+}
+
+task downloadMindSporeLibrary(type: DownloadUrlTask) {
+    doFirst {
+        println "Downloading ${mindsporeLiteDownloadUrl}"
+    }
+    sourceUrl = "${mindsporeLiteDownloadUrl}"
+    target = file("${mindSporeLibrary_arm64}")
+}
+
+task unzipMindSporeInclude(type: Copy, dependsOn: 'downloadMindSporeLibrary') {
+    doFirst {
+        println "Unzipping ${mindSporeLibrary_arm64}"
+    }
+    from tarTree(resources.gzip("${mindSporeLibrary_arm64}"))
+    into "${targetMindSporeInclude}"
+}
+
+task cleanUnusedmindsporeFiles(type: Delete, dependsOn: ['unzipMindSporeInclude']) {
+    delete fileTree("${cleantargetMindSporeInclude}").matching {
+        include "*.tar.gz"
+    }
+    delete fileTree("${cleantargetMindSporeInclude}/${mindsporeLite_Version}").matching {
+        include "*.zip"
+    }
+    delete fileTree("${cleantargetMindSporeInclude}/${mindsporeLite_Version}").matching {
+        include "*.aar"
+    }
+}
+/*
+ * Using preBuild to download mindspore library and model file.
+ * Run before gradle build.
+ */
+if (file("src/main/cpp/${mindsporeLite_Version}/runtime/lib/libmindspore-lite.so").exists()) {
+    downloadMindSporeLibrary.enabled = false
+    unzipMindSporeInclude.enabled = false
+    cleanUnusedmindsporeFiles.enabled = false
+}
+
+if (file("src/main/assets/mobilenetv2.ms").exists()) {
+    downloadClassificationModelFile.enabled = false
+}
+
+if (file("src/main/assets/detection.ms").exists()) {
+    downloadDetectionModelFile.enabled = false
+}
+
+preBuild.dependsOn cleanCmakeCache
+preBuild.dependsOn downloadClassificationModelFile
+preBuild.dependsOn downloadDetectionModelFile
+preBuild.dependsOn downloadMindSporeLibrary
+preBuild.dependsOn unzipMindSporeInclude
+preBuild.dependsOn cleanUnusedmindsporeFiles
+
+
+class DownloadUrlTask extends DefaultTask {
+    @Input
+    String sourceUrl
+
+    @OutputFile
+    File target
+
+    @TaskAction
+    void download() {
+        ant.get(src: sourceUrl, dest: target)
+    }
+}
