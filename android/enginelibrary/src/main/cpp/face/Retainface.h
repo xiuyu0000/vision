@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Huawei Technologies Co., Ltd
+ * Copyright 2022
  * Sort of Code from https://github.com/OpenFirework/Retinaface_CPP.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
